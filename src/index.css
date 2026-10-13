@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-heading: "Montserrat", system-ui, sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+  --font-body: "Lora", Georgia, serif;
+  --font-sans: "Montserrat", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-warm-white: #FAF9F6;
+  --color-dark-ink: #20242B;
+  --color-navy-ink: #112A46;
+  --color-cobalt: #315CFF;
+  --color-lime: #C6E86B;
+  --color-soft-grey: #E8E7E2;
+}
+
+/* Base typography: Lora (Serif) for all body text with #112A46 */
+html, body {
+  scroll-behavior: smooth;
+  font-family: "Lora", Georgia, serif;
+  color: #112A46;
+}
+
+/* Headings: Montserrat (Sans-serif) and dark header ink */
+h1, h2, h3, h4, h5, h6, .font-display, .font-heading {
+  font-family: "Montserrat", system-ui, sans-serif;
+  color: #20242B;
+}
+
+/* Body prose, paragraphs, and list elements use Lora (Serif) */
+p, blockquote, li, label, input, textarea {
+  font-family: "Lora", Georgia, serif;
+}
+
+/* Subtle engineering graph paper grid */
+.engineering-grid {
+  background-image: 
+    linear-gradient(to right, rgba(17, 42, 70, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 42, 70, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.engineering-grid-dense {
+  background-image: 
+    linear-gradient(to right, rgba(49, 92, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(49, 92, 255, 0.05) 1px, transparent 1px);
+  background-size: 12px 12px;
+}
+
+/* Custom scrollbar for journal feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF9F6;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8E7E2;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #112A46;
+}
