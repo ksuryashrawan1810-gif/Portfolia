@@ -187,6 +187,15 @@ The application is fully compatible with Vercel and modern static hosting platfo
 
 A turnkey `vercel.json` file is included in the project root to handle client-side routing rewrites.
 
+### Troubleshooting Vercel Deployments
+
+If you encounter an issue during deployment, check these common items:
+- **Node.js Version**: In Vercel Project Settings > General > Node.js Version, ensure **20.x** or higher is selected (this repository requires Node >= 20).
+- **Framework Preset**: Verify the Framework Preset is set to **Vite**.
+- **Root Directory**: If your code is inside a subfolder in your repository, set the "Root Directory" in Vercel to that folder.
+- **Clean Lockfile**: The project includes a validated `package-lock.json` with resolved dependencies, ensuring `npm install` runs smoothly without peer dependency conflicts.
+- **Environment Variables**: No external environment variables or API keys are required for this portfolio.
+
 ---
 
 ## 9. Contact & Social Channels
