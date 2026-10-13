@@ -4,8 +4,8 @@ import { Compass, Lightbulb, HeartHandshake, ShieldCheck } from "lucide-react";
 
 export const PersonalPhilosophy: React.FC = () => {
   return (
-    <section id="philosophy" className="py-16 md:py-24 border-b border-[#20242B]/10 bg-[#FAF9F6]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="philosophy" className="py-8 sm:py-12 md:py-16 border-b border-[#20242B]/10 bg-[#FAF9F6]">
+      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12 pb-6 border-b border-[#20242B]/10 space-y-3">
           <div className="flex items-center gap-2 text-xs font-mono text-[#315CFF]">

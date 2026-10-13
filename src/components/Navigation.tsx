@@ -24,23 +24,23 @@ export const Navigation: React.FC<NavigationProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/95 backdrop-blur-xs border-b border-[#20242B]/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-8">
+    <header className="sticky top-0 z-50 w-full bg-[#FAF9F6]/95 backdrop-blur-xs border-b border-[#20242B]/10 shrink-0">
+      <div className="w-full px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between gap-2 sm:gap-6">
         {/* Zone 1: Brand Wordmark & Monogram */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
             type="button"
             onClick={() => handleNavClick("about")}
-            className="group flex items-center gap-2.5 text-[#20242B] hover:text-[#315CFF] transition-colors cursor-pointer text-left"
+            className="group flex items-center gap-2 sm:gap-2.5 text-[#20242B] hover:text-[#315CFF] transition-colors cursor-pointer text-left"
           >
-            <span className="w-8 h-8 rounded-xs bg-[#20242B] text-[#FAF9F6] font-mono text-xs font-semibold flex items-center justify-center tracking-wider group-hover:bg-[#315CFF] transition-colors">
+            <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-xs bg-[#20242B] text-[#FAF9F6] font-mono text-xs font-semibold flex items-center justify-center tracking-wider group-hover:bg-[#315CFF] transition-colors shrink-0">
               {profileData.monogram}
             </span>
             <div className="flex flex-col">
-              <span className="font-semibold text-sm tracking-tight whitespace-nowrap">
+              <span className="font-semibold text-xs sm:text-sm tracking-tight whitespace-nowrap">
                 {profileData.name}
               </span>
-              <span className="text-[11px] font-mono text-[#20242B]/60 leading-none">
+              <span className="text-[10px] sm:text-[11px] font-mono text-[#20242B]/60 leading-none">
                 {profileData.collegeShort} · {profileData.branch}
               </span>
             </div>

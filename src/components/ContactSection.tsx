@@ -20,8 +20,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   };
 
   return (
-    <section id="contact" className="py-12 md:py-20 bg-[#FAF9F6] text-[#20242B]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-6 sm:py-10 md:py-14 bg-[#FAF9F6] text-[#20242B]">
+      <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="border-b border-[#20242B]/10 pb-6 mb-10">
           <div className="flex items-center gap-2 text-xs font-mono text-[#315CFF] mb-2">

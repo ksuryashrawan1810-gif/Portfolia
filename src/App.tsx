@@ -31,7 +31,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] text-[#112A46] flex flex-col font-serif selection:bg-[#C6E86B] selection:text-[#112A46]">
+    <div className="h-screen h-[100dvh] w-full bg-[#FAF9F6] text-[#112A46] flex flex-col font-serif selection:bg-[#C6E86B] selection:text-[#112A46] overflow-hidden">
       {/* 3-Zone Synchronized Navigation Header */}
       <Navigation
         currentSection={currentSection}
@@ -40,8 +40,8 @@ export default function App() {
         onOpenJournalReader={() => handleOpenJournalAtPage(1)}
       />
 
-      {/* Main Interactive Portfolio Book with 3D Page-Turn Physics */}
-      <main className="flex-1 py-4 sm:py-8">
+      {/* Main Interactive Portfolio Book with 3D Page-Turn Physics (Fits 100% of viewport edge-to-edge) */}
+      <main className="flex-1 min-h-0 w-full flex flex-col overflow-hidden p-0">
         <PortfolioBook
           currentSection={currentSection}
           onSectionChange={setCurrentSection}
@@ -53,6 +53,7 @@ export default function App() {
               />
               <AreasOfInterest />
               <PersonalPhilosophy />
+              <Footer />
             </div>
           )}
           renderProjects={() => (
@@ -60,6 +61,7 @@ export default function App() {
               <ProjectPreviewSection
                 onOpenJournalPage={handleOpenJournalAtPage}
               />
+              <Footer />
             </div>
           )}
           renderContact={() => (
@@ -68,13 +70,11 @@ export default function App() {
                 onNavigateAbout={() => handleNavigateSection("about")}
                 onNavigateProjects={() => handleNavigateSection("projects")}
               />
+              <Footer />
             </div>
           )}
         />
       </main>
-
-      {/* Footer */}
-      <Footer />
 
       {/* Digital Folio Spread Reader */}
       <BookJournalReader

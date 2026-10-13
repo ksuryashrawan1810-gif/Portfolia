@@ -44,8 +44,8 @@ export const ProjectPreviewSection: React.FC<ProjectPreviewSectionProps> = ({
       : projectsData.filter((p) => p.categoryId === selectedCategory);
 
   return (
-    <section id="projects" className="py-12 md:py-20 bg-[#FAF9F6] text-[#20242B]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projects" className="py-6 sm:py-10 md:py-14 bg-[#FAF9F6] text-[#20242B]">
+      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-[#20242B]/10">
           <div className="space-y-2">

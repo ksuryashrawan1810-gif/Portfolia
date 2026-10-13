@@ -12,9 +12,9 @@ export const HeroAbout: React.FC<HeroAboutProps> = ({
   onOpenBookReader
 }) => {
   return (
-    <section id="about" className="relative py-12 md:py-20 border-b border-[#20242B]/10 overflow-hidden">
+    <section id="about" className="relative py-6 sm:py-10 md:py-14 border-b border-[#20242B]/10 overflow-hidden">
       {/* Background Engineering Graph Accents */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Kicker & Ledger Entry */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-[#20242B]/10 text-xs font-mono text-[#20242B]/60">
           <div className="flex items-center gap-2">
@@ -59,13 +59,13 @@ export const HeroAbout: React.FC<HeroAboutProps> = ({
             </div>
 
             {/* Prominent Motto Callout Banner */}
-            <div className="relative p-5 sm:p-6 bg-[#FAF9F6] border-2 border-[#20242B] rounded-xs shadow-[3px_3px_0px_0px_#20242B] my-6">
+            <div className="relative p-5 sm:p-6 bg-white border border-[#20242B]/15 border-l-4 border-l-[#315CFF] rounded-xs shadow-xs my-6">
               <div className="flex items-center justify-between gap-4 mb-2">
                 <span className="font-mono text-[11px] tracking-wider text-[#315CFF] font-semibold uppercase">
                   Personal Motto & Guiding Philosophy
                 </span>
                 <span className="font-mono text-[11px] text-[#112A46]/50">
-                  RULE NO. 01
+                  CORE VALUE
                 </span>
               </div>
               <blockquote className="font-serif italic text-2xl sm:text-3xl text-[#112A46] font-medium leading-snug">

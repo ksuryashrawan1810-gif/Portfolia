@@ -18,6 +18,9 @@ const SECTIONS: { id: BookSection; title: string; folioCode: string; pageNum: nu
   { id: "contact", title: "Contact & Connect", folioCode: "FOLIO 03", pageNum: 3 }
 ];
 
+// Physical page-turning duration: 1150ms calibrated for authentic paper inertia
+const PAGE_TURN_DURATION = 1150;
+
 export const PortfolioBook: React.FC<PortfolioBookProps> = ({
   currentSection,
   onSectionChange,
@@ -100,7 +103,7 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
       });
     });
 
-    // Complete animation at 750ms
+    // Complete animation at calibrated physical duration (1150ms)
     flipTimerRef.current = window.setTimeout(() => {
       setDisplaySection(targetSection);
       onSectionChange(targetSection);
@@ -111,7 +114,7 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
       if (pageContainerRef.current) {
         pageContainerRef.current.scrollTo({ top: 0, behavior: "instant" });
       }
-    }, 750);
+    }, PAGE_TURN_DURATION);
   };
 
   // Keyboard navigation for page turning
@@ -164,106 +167,45 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
     }
   };
 
-  // Dynamic shadow calculation
-  const normalizedProgress = Math.abs(rotationAngle) / 180;
-  const shadowOpacity = Math.sin(normalizedProgress * Math.PI) * 0.4;
-
   return (
-    <div className="relative w-full max-w-[1440px] mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-4">
-      {/* Physical Engineering Notebook Shell */}
-      <div className="relative bg-[#FAF9F6] border-2 border-[#20242B] rounded-xs shadow-[6px_6px_0px_0px_#20242B] sm:shadow-[10px_10px_0px_0px_#20242B] overflow-hidden flex flex-col">
-        {/* Top Folio Header & Notebook Index Tabs */}
-        <div className="h-14 bg-[#FAF9F6] border-b-2 border-[#20242B] px-3 sm:px-6 flex items-center justify-between gap-3 sm:gap-4 shrink-0 select-none z-20">
-          {/* Left: Binding mark & active folio code */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-[#20242B]">
-              <span className="w-2.5 h-2.5 bg-[#315CFF]" />
-              <span className="tracking-wider uppercase text-[11px] sm:text-xs">
-                NITW · EEE JOURNAL
-              </span>
-            </div>
-            <span className="text-[#20242B]/30 hidden sm:inline" aria-hidden="true">/</span>
-            <span className="text-xs font-mono text-[#315CFF] font-semibold hidden sm:inline">
-              {SECTIONS[activeIndex].folioCode}
-            </span>
-          </div>
-
-          {/* Center/Right: Bookmark Tabs */}
-          <div className="flex items-center gap-1 sm:gap-2">
-            {SECTIONS.map((sec, idx) => {
-              const isActive = displaySection === sec.id;
-              return (
-                <button
-                  key={sec.id}
-                  type="button"
-                  disabled={isFlipping}
-                  onClick={() => triggerPageTurn(sec.id)}
-                  className={`px-2 sm:px-3 py-1.5 text-xs font-mono transition-all rounded-xs cursor-pointer border flex items-center gap-1 ${
-                    isActive
-                      ? "bg-[#20242B] text-[#FAF9F6] border-[#20242B] font-bold shadow-xs"
-                      : "bg-[#FAF9F6] text-[#20242B]/75 border-[#20242B]/20 hover:border-[#315CFF] hover:text-[#315CFF]"
-                  } ${isFlipping ? "opacity-60 cursor-not-allowed" : ""}`}
-                >
-                  <span className="text-[10px] text-[#C6E86B] font-bold">0{idx + 1}</span>
-                  <span className="capitalize">{sec.id}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Book Spine Details & 3D Page Viewport */}
-        <div className="relative flex-1 flex overflow-hidden min-h-[750px]">
-          {/* Left Physical Notebook Binding Edge (Desktop Spine) */}
-          <div className="hidden md:flex w-12 bg-[#E8E7E2] border-r-2 border-[#20242B] shrink-0 flex-col items-center justify-between py-6 select-none z-30">
-            {/* Top rivets */}
-            <div className="space-y-6 flex flex-col items-center">
-              <div className="w-3 h-3 rounded-full border-2 border-[#20242B] bg-[#FAF9F6]" />
-              <div className="w-px h-8 bg-[#20242B]/30" />
-              <div className="w-3 h-3 rounded-full border-2 border-[#20242B] bg-[#FAF9F6]" />
-            </div>
-
-            {/* Rotated spine text */}
-            <div className="rotate-180 [writing-mode:vertical-rl] font-mono text-[10px] tracking-widest text-[#20242B]/60 uppercase">
-              WARANGAL EEE FOLIO 2026
-            </div>
-
-            {/* Bottom rivets */}
-            <div className="space-y-6 flex flex-col items-center">
-              <div className="w-3 h-3 rounded-full border-2 border-[#20242B] bg-[#FAF9F6]" />
-              <div className="w-px h-8 bg-[#20242B]/30" />
-              <div className="w-3 h-3 rounded-full border-2 border-[#20242B] bg-[#FAF9F6]" />
-            </div>
-          </div>
-
-          {/* 3D Perspective Stage */}
-          <div
-            ref={pageContainerRef}
-            className="relative flex-1 bg-[#FAF9F6] overflow-y-auto overflow-x-hidden [perspective:2400px] [perspective-origin:15%_50%]"
-            style={{
-              transformStyle: "preserve-3d"
-            }}
-          >
+    <div className="relative w-full h-full flex-1 flex flex-col min-h-0 bg-[#FAF9F6] overflow-hidden">
+      {/* 3D Page Viewport Stage */}
+      <div className="relative flex-1 min-h-0 w-full flex overflow-hidden">
+        {/* 3D Perspective Stage */}
+        <div
+          ref={pageContainerRef}
+          className="relative flex-1 min-h-0 w-full bg-[#FAF9F6] overflow-y-auto overflow-x-hidden [perspective:2400px] [perspective-origin:50%_50%] scroll-smooth book-scroll-viewport"
+          style={{
+            transformStyle: "preserve-3d"
+          }}
+        >
             {/* Base Under-Page (Resting on book bed) */}
             <div
-              className={`w-full h-full bg-[#FAF9F6] transition-opacity duration-300 ${
+              className={`relative w-full h-full bg-[#FAF9F6] transition-opacity duration-500 ${
                 isFlipping ? "pointer-events-none select-none" : ""
               }`}
             >
               {isFlipping
-                ? getSectionContent(flipDirection === "forward" ? turningTo : turningTo)
+                ? getSectionContent(flipDirection === "forward" ? turningTo : turningFrom)
                 : getSectionContent(displaySection)}
+
+              {/* Realistic ambient drop shadow cast on bed as paper leaf lifts */}
+              {isFlipping && (
+                <div
+                  className="absolute inset-y-0 left-0 w-36 bg-gradient-to-r from-black/25 via-black/10 to-transparent pointer-events-none z-10 page-under-shadow"
+                />
+              )}
             </div>
 
             {/* 3D Turning Leaf (Active strictly during flip) */}
             {isFlipping && (
               <div
-                className="absolute inset-0 w-full h-full pointer-events-none z-40"
+                className="absolute inset-0 w-full h-full pointer-events-none z-40 turning-page-leaf"
                 style={{
                   transformOrigin: "left center",
                   transformStyle: "preserve-3d",
                   transform: `rotateY(${rotationAngle}deg)`,
-                  transition: "transform 750ms cubic-bezier(0.25, 1, 0.45, 1)",
+                  transition: `transform ${PAGE_TURN_DURATION}ms cubic-bezier(0.35, 0.05, 0.22, 0.98)`,
                   willChange: "transform"
                 }}
               >
@@ -281,17 +223,13 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
                       : getSectionContent(turningTo)}
                   </div>
 
-                  {/* Dynamic Shading on Front Face */}
+                  {/* Dynamic Shading on Front Face during physical turn */}
                   <div
-                    className="absolute inset-0 pointer-events-none transition-opacity duration-150"
-                    style={{
-                      backgroundColor: "black",
-                      opacity: shadowOpacity
-                    }}
+                    className="absolute inset-0 pointer-events-none bg-black page-turn-shadow-front"
                   />
 
-                  {/* Left Spine Crease Shadow */}
-                  <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black/25 via-black/10 to-transparent pointer-events-none" />
+                  {/* Left Spine Crease Shadow & Paper Flex Lighting */}
+                  <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black/25 via-black/10 to-transparent pointer-events-none" />
                 </div>
 
                 {/* Back Face of Turning Leaf (Verso Page) */}
@@ -336,25 +274,19 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
                     <span>NATIONAL INSTITUTE OF TECHNOLOGY, WARANGAL</span>
                   </div>
 
-                  {/* Dynamic Shading on Reverse Face */}
+                  {/* Dynamic Shading on Reverse Face during physical turn */}
                   <div
-                    className="absolute inset-0 pointer-events-none transition-opacity duration-150"
-                    style={{
-                      backgroundColor: "black",
-                      opacity: shadowOpacity * 0.7
-                    }}
+                    className="absolute inset-0 pointer-events-none bg-black page-turn-shadow-back"
                   />
                 </div>
               </div>
             )}
 
-            {/* Left Spine Ambient Drop Shadow */}
-            <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/15 to-transparent pointer-events-none z-10" />
           </div>
         </div>
 
         {/* Bottom Folio Control Bar & Synchronized Page Indicator */}
-        <div className="h-14 bg-[#FAF9F6] border-t-2 border-[#20242B] px-3 sm:px-6 flex items-center justify-between gap-3 sm:gap-4 shrink-0 select-none z-20">
+        <div className="h-11 sm:h-12 bg-[#FAF9F6] border-t border-[#20242B]/10 px-3 sm:px-6 flex items-center justify-between gap-2 sm:gap-4 shrink-0 select-none z-20">
           {/* Previous Page Button */}
           <button
             type="button"
@@ -362,19 +294,19 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
             onClick={() => {
               if (activeIndex > 0) triggerPageTurn(SECTIONS[activeIndex - 1].id);
             }}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono border rounded-xs transition-colors cursor-pointer ${
+            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border rounded-xs transition-colors cursor-pointer ${
               activeIndex === 0 || isFlipping
-                ? "border-[#20242B]/15 text-[#112A46]/30 cursor-not-allowed"
-                : "border-[#20242B]/30 text-[#112A46] hover:border-[#315CFF] hover:text-[#315CFF] bg-white shadow-xs"
+                ? "border-[#20242B]/10 text-[#112A46]/30 cursor-not-allowed"
+                : "border-[#20242B]/20 text-[#112A46] hover:border-[#315CFF] hover:text-[#315CFF] bg-white shadow-xs"
             }`}
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             <span className="hidden sm:inline">Previous Folio</span>
             <span className="sm:hidden">Prev</span>
           </button>
 
           {/* Synchronized Indicator */}
-          <div className="flex items-center gap-2 sm:gap-3 text-xs font-mono text-[#112A46]">
+          <div className="flex items-center gap-1.5 sm:gap-3 text-xs font-mono text-[#112A46]">
             <span className="font-bold text-[#315CFF]">
               FOLIO 0{activeIndex + 1}
             </span>
@@ -383,7 +315,7 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
             <span className="text-[#112A46]/80 font-semibold hidden md:inline">
               · {SECTIONS[activeIndex].title}
             </span>
-            <span className="hidden lg:inline text-[11px] text-[#112A46]/40 ml-2">
+            <span className="hidden xl:inline text-[11px] text-[#112A46]/40 ml-2">
               (Keys: <kbd className="px-1 py-0.5 border border-[#112A46]/20 rounded-xs bg-white">←</kbd> / <kbd className="px-1 py-0.5 border border-[#112A46]/20 rounded-xs bg-white">→</kbd> or <kbd className="px-1 py-0.5 border border-[#112A46]/20 rounded-xs bg-white">1</kbd>, <kbd className="px-1 py-0.5 border border-[#112A46]/20 rounded-xs bg-white">2</kbd>, <kbd className="px-1 py-0.5 border border-[#112A46]/20 rounded-xs bg-white">3</kbd>)
             </span>
           </div>
@@ -395,18 +327,17 @@ export const PortfolioBook: React.FC<PortfolioBookProps> = ({
             onClick={() => {
               if (activeIndex < SECTIONS.length - 1) triggerPageTurn(SECTIONS[activeIndex + 1].id);
             }}
-            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-mono border rounded-xs transition-colors cursor-pointer ${
+            className={`inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-mono border rounded-xs transition-colors cursor-pointer ${
               activeIndex === SECTIONS.length - 1 || isFlipping
-                ? "border-[#20242B]/15 text-[#112A46]/30 cursor-not-allowed"
-                : "border-[#20242B]/30 text-[#112A46] hover:border-[#315CFF] hover:text-[#315CFF] bg-white shadow-xs"
+                ? "border-[#20242B]/10 text-[#112A46]/30 cursor-not-allowed"
+                : "border-[#20242B]/20 text-[#112A46] hover:border-[#315CFF] hover:text-[#315CFF] bg-white shadow-xs"
             }`}
           >
             <span className="hidden sm:inline">Next Folio</span>
             <span className="sm:hidden">Next</span>
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
         </div>
       </div>
-    </div>
-  );
+    );
 };

@@ -4,12 +4,16 @@ import { Github, Linkedin, ArrowUpRight, ArrowUp } from "lucide-react";
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
+    const scrollContainer = document.querySelector(".book-scroll-viewport");
+    if (scrollContainer) {
+      scrollContainer.scrollTo({ top: 0, behavior: "smooth" });
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer className="w-full bg-[#FAF9F6] border-t border-[#20242B]/15 py-12 md:py-16 text-[#112A46]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="w-full bg-[#FAF9F6] border-t border-[#20242B]/15 py-8 sm:py-10 md:py-12 text-[#112A46]">
+      <div className="w-full max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-10 border-b border-[#20242B]/10">
           {/* Identity & Closing Statement */}
           <div className="space-y-3 max-w-xl">
